@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.sonicle</groupId>
+	<artifactId>sonicle-superpom</artifactId>
+	<version>1</version>
+	<packaging>pom</packaging>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
+		<!-- MAVEN: build-plugins versions -->
+		<build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
+		<exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
+		<maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
+		<maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
+		<maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
+		<maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
+		<maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+		<maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
+		<maven-resources-plugin.version>2.5</maven-resources-plugin.version>
+		<maven-source-plugin.version>3.1.0</maven-source-plugin.version>
+		<nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
+		<maven-surefire-plugin.version>2.10</maven-surefire-plugin.version>
+		<properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
+		<wagon-maven-plugin.version>1.0</wagon-maven-plugin.version>
+	</properties>
+	
+	<profiles>
+		<profile>
+			<id>deploy-release</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<distributionManagement>
+				<repository>
+					<id>sonicle-oss-releases</id>
+					<name>Sonicle OSS releases repository</name>
+					<url>https://mvn.sonicle.com/repository/maven-oss-releases/</url>
+					<layout>default</layout>
+					<uniqueVersion>true</uniqueVersion>
+				</repository>
+			</distributionManagement>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>${nexus-staging-maven-plugin.version}</version>
+						<extensions>true</extensions>
+						<configuration>
+							<skipStaging>true</skipStaging>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>deploy-staging</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<distributionManagement>
+				<repository>
+					<id>sonicle-oss-staging</id>
+					<name>Sonicle OSS staging repository</name>
+					<url>https://mvn.sonicle.com/repository/maven-oss-staging/</url>
+					<layout>default</layout>
+					<uniqueVersion>true</uniqueVersion>
+				</repository>
+			</distributionManagement>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>${nexus-staging-maven-plugin.version}</version>
+						<extensions>true</extensions>
+						<configuration>
+							<skipStaging>true</skipStaging>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>
